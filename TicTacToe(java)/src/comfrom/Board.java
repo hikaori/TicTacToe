@@ -28,23 +28,25 @@ public class Board {
                 System.out.print("| " + board[i][k]);
             }
             System.out.print("| ");
-            System.out.println("");
         }
-        System.out.println("==========");
+        System.out.println("\n==========");
     }
 
     public String[][] getBord() {
         return bord;
     }
 
-    public void setBord(String[] bord,String mark) {
+    public void setBord(String[] bord,String mark ,Player playter) {
         int firstIndex = Integer.parseInt(bord[0]);
         int secondIndex = Integer.parseInt(bord[1]);
         if(this.bord[firstIndex][secondIndex] == " ") {
             this.bord[firstIndex][secondIndex] = mark;
+            playter.setSelected(true);
+            playter.setPlayCount();
         }
         else {
             System.out.println("this is already selected");
+            playter.setSelected(false);
         }
     }
 }
