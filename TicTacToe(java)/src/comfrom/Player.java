@@ -76,4 +76,7 @@ public class Player {
         }
         return result;
     }
+    public String toString(){
+        return this.name;
+    }
 }
