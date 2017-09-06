@@ -5,10 +5,29 @@ import java.util.Scanner;
 public class Main {
     public static Boolean gameover = false;
 
-    public static void main(String[] args) {
-        int playCount = 0;
+    public static String getInput(){
+        Scanner scan = new Scanner(System.in);
+        String result = scan.nextLine();
+        return result;
+    }
 
-	    System.out.println("===============================");
+    public static Board createBoard(){
+        Board bord = new Board();
+        bord.display(bord.getBord());
+        return bord;
+    }
+
+    public static Player createPlayer(String mark){
+        Player player = new Player();
+        player.setMark(mark);
+        return player;
+    }
+
+    /////  Game Main code start /////////
+
+    public static void main(String[] args) {
+
+        System.out.println("===============================");
         System.out.println("WELCOME TO TIC TAC TOE!");
         System.out.println("Designer : John Smith");
         System.out.println("Class : Cornerstone WMDP");
@@ -19,108 +38,91 @@ public class Main {
         System.out.println("===============================");
 
 
-        Scanner scan = new Scanner(System.in);
-        String inputNum = scan.nextLine();
+        String gameType = getInput();
 
         //　==== 1 --- person vs. person =====
-        if(inputNum.equals("1")){
+        if (gameType.equals("1")) {
 
             System.out.println("you have entered choice 1");
-            Board bord = new Board();
-            bord.display(bord.getBord());
+            Board bord = createBoard();
+            Player player1 = createPlayer("X");
+            Player player2 = createPlayer("O");
 
-            Player p1 = new Player();
-            p1.setMark("X");
-            Player p2 = new Player();
-            p2.setMark("O");
             while (!gameover) {
-                while(!p1.getSelected()) {
-                    System.out.println("Player1 make your move");
-                    inputNum = scan.nextLine();
-                    p1.selectPlace(inputNum, bord);
-                }
-
-                p1.setSelected(false);
-                if(p1.statusCheck(bord)){
+                chosePlaceByInput(player1, bord);
+                if (player1.statusCheck(bord)) {
                     System.out.println("Player1 win");
                     break;
                 }
 
-                while(!p2.getSelected()) {
-                    System.out.println("Player2 make your move");
-                    inputNum = scan.nextLine();
-                    p2.selectPlace(inputNum, bord);
-                }
-                p2.setSelected(false);
-                if(p2.statusCheck(bord)){
+                chosePlaceByInput(player2, bord);
+                if (player2.statusCheck(bord)) {
                     System.out.println("Player2 win");
                     break;
                 }
 
-                if(p1.getPlayCount()==5 || p2.getPlayCount()==4){
+                if (player1.getPlayCount() == 5 || player2.getPlayCount() == 4) {
                     System.out.println("!!!draw!!!");
                     gameover = true;
                 }
             }
-
         }
 
         //　==== 2 --- person vs. random computer =====
-        else if(inputNum.equals("2")){
+        else if (gameType.equals("2")) {
             System.out.println("you have entered choice 2");
 
-            Board bord = new Board();
-            bord.display(bord.getBord());
+            Board bord = createBoard();
+            Player player1 = createPlayer("X");
+            Player player2 = createPlayer("O");
 
-            Player p1 = new Player();
-            p1.setMark("X");
-            Player p2 = new Player();
-            p2.setMark("O");
             while (!gameover) {
-                while(!p1.getSelected()) {
-                    System.out.println("Player1 make your move");
-                    inputNum = scan.nextLine();
-                    p1.selectPlace(inputNum, bord);
-                }
-                p1.setSelected(false);
-                if(p1.statusCheck(bord)){
+                chosePlaceByInput(player1, bord);
+                if (player1.statusCheck(bord)) {
                     System.out.println("Player1 win");
                     break;
                 }
-                else if(p1.getPlayCount()==4){
-                    System.out.println("!!!draw!!!");
-                    gameover = true;
-                }
 
-
-                while(!p2.getSelected()) {
-                    System.out.println("computer make move");
-                    int randomNum1 = (int) (Math.random() * 3);
-                    int randomNum2 = (int) (Math.random() * 3);
-                    String strRandNum1 = String.valueOf(randomNum1);
-                    String strRandNum2 = String.valueOf(randomNum2);
-                    inputNum = (strRandNum1 + " " + strRandNum2);
-                    System.out.println(inputNum);
-                    p2.selectPlace(inputNum, bord);
-                }
-                p2.setSelected(false);
-                if(p2.statusCheck(bord)){
+                chosePlaceByComputer(player2,bord);
+                player2.setSelected(false);
+                if (player2.statusCheck(bord)) {
                     System.out.println("computer win");
                     break;
                 }
 
-                if(p1.getPlayCount()==5 || p2.getPlayCount()==4){
+                if (player1.getPlayCount() == 5 || player2.getPlayCount() == 4) {
                     System.out.println("!!!draw!!!");
                     gameover = true;
                 }
-
             }
-        }
-
-
-        else {
+        } else {
             System.out.println("you enter invalid number please enter 1 or 2");
         }
 
+    }
+    /////  Game Main code end /////////
+
+
+    public static void chosePlaceByInput(Player player, Board board) {
+        while (!player.getSelected()) {
+            System.out.println(player + " make your move");
+            String inputNum = getInput();
+            player.selectPlace(inputNum, board);
+        }
+        player.setSelected(false);
+    }
+
+    public static void chosePlaceByComputer(Player player, Board board) {
+        while (!player.getSelected()) {
+            System.out.println(player + " make your move");
+            int randomNum1 = (int) (Math.random() * 3);
+            int randomNum2 = (int) (Math.random() * 3);
+            String strRandNum1 = String.valueOf(randomNum1);
+            String strRandNum2 = String.valueOf(randomNum2);
+            String inputNum = (strRandNum1 + " " + strRandNum2);
+            System.out.println(inputNum);
+            player.selectPlace(inputNum, board);
+        }
+        player.setSelected(false);
     }
 }
