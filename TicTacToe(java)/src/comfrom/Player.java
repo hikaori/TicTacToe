@@ -4,9 +4,17 @@ package comfrom;
  * Created by kaorihirata on 2017-09-05.
  */
 public class Player {
+    private String name;
     private String mark;
-    private Boolean isSelected = false;
-    private int playCount = 0;
+    private Boolean isSelected;
+    private int playCount;
+
+    public Player(String name, String mark) {
+        this.name = name;
+        this.mark = mark;
+        this.isSelected = false;
+        this.playCount = 0;
+    }
 
     public int getPlayCount() {
         return playCount;
@@ -23,6 +31,8 @@ public class Player {
     public void setSelected(Boolean selected) {
         isSelected = selected;
     }
+
+
 
     public String getMark() {
         return mark;

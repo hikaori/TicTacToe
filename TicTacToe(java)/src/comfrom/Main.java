@@ -17,16 +17,9 @@ public class Main {
         return bord;
     }
 
-    public static Player createPlayer(String mark){
-        Player player = new Player();
-        player.setMark(mark);
-        return player;
-    }
-
     /////  Game Main code start /////////
 
     public static void main(String[] args) {
-
         System.out.println("===============================");
         System.out.println("WELCOME TO TIC TAC TOE!");
         System.out.println("Designer : John Smith");
@@ -45,8 +38,8 @@ public class Main {
 
             System.out.println("you have entered choice 1");
             Board bord = createBoard();
-            Player player1 = createPlayer("X");
-            Player player2 = createPlayer("O");
+            Player player1 = new Player("player1","X");
+            Player player2 = new Player("player2","O");
 
             while (!gameover) {
                 chosePlaceByInput(player1, bord);
@@ -73,8 +66,8 @@ public class Main {
             System.out.println("you have entered choice 2");
 
             Board bord = createBoard();
-            Player player1 = createPlayer("X");
-            Player player2 = createPlayer("O");
+            Player player1 = new Player("player1","X");;
+            Player player2 = new Player("player2","O");
 
             while (!gameover) {
                 chosePlaceByInput(player1, bord);
@@ -105,7 +98,7 @@ public class Main {
 
     public static void chosePlaceByInput(Player player, Board board) {
         while (!player.getSelected()) {
-            System.out.println(player + " make your move");
+            System.out.println(player.toString() + " ----make your move");
             String inputNum = getInput();
             player.selectPlace(inputNum, board);
         }
@@ -114,7 +107,7 @@ public class Main {
 
     public static void chosePlaceByComputer(Player player, Board board) {
         while (!player.getSelected()) {
-            System.out.println(player + " make your move");
+            System.out.println(player.toString() + " make your move");
             int randomNum1 = (int) (Math.random() * 3);
             int randomNum2 = (int) (Math.random() * 3);
             String strRandNum1 = String.valueOf(randomNum1);
